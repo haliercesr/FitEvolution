@@ -11,8 +11,8 @@ const UploadWidCloud = ({uploadImage}) => {
     cloudinaryRef.current=window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
 
-      cloudName:'fitevolution',
-      uploadPreset:'k0upcy9d'
+      cloudName:'dp8qmuxku',
+      uploadPreset:'zt1zhk4z'
     },function(error,result){
       if (!error && result && result.event === 'success') {
         console.log('La imagen se subió correctamente:', result.info);
