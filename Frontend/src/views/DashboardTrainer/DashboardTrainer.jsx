@@ -16,6 +16,7 @@ import SuspendedAccount from "../../components/suspendedAccount/suspendedAccount
 //styles
 import React from "react";
 import "./DashboardTrainer.css";
+import LoadingComponent from "../../components/loading/loading.component";
 
 const DashboardTrainer = (props) => {
   const [menu, setmenu] = useState("deportes");
@@ -35,7 +36,7 @@ const DashboardTrainer = (props) => {
         console.log(user.email);
         setUserSession(true);
         console.log(trainer);
-        if (trainer.status !== "Active" && (trainer.focusTr === "" || !trainer.focusTr)) navigate('/checkoutTrainer')
+        
       } else {
         setUserSession(false);
 
@@ -56,10 +57,13 @@ const DashboardTrainer = (props) => {
 
   return (
     <>
+    
       {userSession ? (
         <div className="bg-trainer-board">
+          { !trainer.status && <LoadingComponent/>}
+          {trainer.status && trainer.status !== "Active" && (trainer.focusTr === "" || !trainer.focusTr) && navigate('/checkoutTrainer')}
            {trainer.status && trainer.status === "Suspended" && <SuspendedAccount message={"Tu cuenta fue suspendida, por favor contacta con soporte: soporte@fitrevolution.com"} />}
-          {trainer.status && trainer.status === "Confirmed" && <SuspendedAccount message={"Tu cuenta se encuentra en estado de revision, tu numero de seguimiento es: #2001539. Atte: solicitudesa@fitrevolution.com"} />}
+          {trainer.status && trainer.status === "Confirmed" && trainer.focusTr && trainer.focusTr.length>0 && <SuspendedAccount message={"Tu cuenta se encuentra en estado de revision, tu numero de seguimiento es: #2001539. Atte: solicitudesa@fitrevolution.com"} />}
           {trainer.status && trainer.status === "Active" && <><DashBar handleMenu={handleMenu} />
           {menu === "deportes" && <MenuprincipalTrainer trainer={trainer} />}
           {menu === "pagos" && <PagosprincipalTrainer />}

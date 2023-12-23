@@ -18,11 +18,12 @@ import logout from '../../utils/logout';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './checkout.css'
 import validate from "./validate.js";
 import axios from 'axios';
 import { URLSERVER } from '../../../configURL.js';
+import LoadingComponent from '../../components/loading/loading.component.jsx';
 
 function Copyright() {
   return (
@@ -76,6 +77,10 @@ const [termsAccepted, setTermsAccepted] = React.useState(false);
   });
   console.log(form)
   console.log(trainer.id)
+
+  useEffect(()=>{
+
+  },[trainer])
 
   const handleChange = (event) => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
@@ -139,7 +144,8 @@ function generarNumeroSeguimiento() {
 }
 
 const numeroSeguimiento = generarNumeroSeguimiento();
-  return (<div className='conteiner'>
+  return (<>
+  <div className='conteiner'>
     <React.Fragment >
       <CssBaseline />
       <AppBar
@@ -211,5 +217,6 @@ const numeroSeguimiento = generarNumeroSeguimiento();
         <Copyright />
       </Container>
     </React.Fragment>
-    </div>);
+    </div>
+    </>);
 }
